@@ -23,15 +23,18 @@ DIR_LIB_INC	=	$(DIR_LIB)includes/
 LIBFT		=	$(DIR_LIB)libft.a
 
 #-------------------------- Header files ---------------------------------------
-HEAD_FDF	=	fdf.h
+HEAD_FDF	=	fdf.h fdf_keys.h
 
 #-------------------------- Source files ---------------------------------------
-C_FDF		= 	main.c
+C_FDF		= 	main.c fdf_parser.c fdf_init.c fdf_exit.c fdf_utils.c\
+				fdf_events_control.c fdf_run.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_FDF:.c=.o))
 
 INC 		= 	$(addprefix -I, $(DIR_INC) $(DIR_LIB_INC))
+
+INC_FDF 	= 	$(addprefix $(DIR_INC), $(HEAD_FDF))
 
 
 all: lib $(NAME)

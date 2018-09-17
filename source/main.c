@@ -1,19 +1,32 @@
 #include "fdf.h"
 
-int		fdf_deal_key(int key, t_fdf *fdf)
+void test(t_fdf *fdf)
 {
-	if (key == 53)
-		exit(0);
-	return (0);
+	t_list2 *tmp = fdf->p_start;
+
+	while (tmp)
+	{
+		t_point *p = (t_point *)tmp->content;
+		ft_printf("(x = %d, y = %d, z = %d, color = %u)\n", p->x, p->y, p->z, p->color);
+		tmp = tmp->next;
+	}
+	exit(0);
 }
 
 int		main(int argc, char **argv)
 {
 	t_fdf fdf;
 
-	fdf.mlx_ptr = mlx_init();
-	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 500, 500, "hallo");
-	mlx_key_hook(fdf.win_ptr, fdf_deal_key, &fdf);
-	mlx_loop(fdf.mlx_ptr);
+	if (argc == 2)
+	{
+		fdf_init(&fdf, argv[1]);
+		fdf_parser(&fdf);
+		test(&fdf);
+		fdf_window_init(&fdf);
+		fdf_run(&fdf);
+		fdf_free(&fdf);
+	}
+	else
+		fdf_print_usage();
 	return (0);
 }

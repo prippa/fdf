@@ -52,13 +52,13 @@ long long int	ft_atoi_max(char *str)
 	return (sign ? -res : res);
 }
 
-static int		ft_base(const char c)
+int				ft_base(const char c)
 {
 	if (c >= '0' && c <= '9')
 		return (c - '0');
-	if (c >= 'a' && c <= 'z')
+	if (c >= 'a' && c <= 'f')
 		return (c - 'a' + 10);
-	if (c >= 'A' && c <= 'Z')
+	if (c >= 'A' && c <= 'F')
 		return (c - 'A' + 10);
 	return (-1);
 }
@@ -79,7 +79,7 @@ long long int	ft_atoi_base(const char *str, int base)
 			sign = 1;
 		++str;
 	}
-	while ((current = ft_base(*str++)) > -1 && current < base)
+	while ((current = ft_base(*str++)) > -1)
 		res = (res * base) + current;
 	return (sign ? -res : res);
 }

@@ -13,14 +13,32 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+/*
+************************************ Includes **********************************
+*/
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include "ft_printf.h"
 
-# define BUFF_SIZE 80
+/*
+************************************ Defines ***********************************
+*/
+
 # define ABS(x) (((x) < 0) ? -(x) : (x))
 # define MAX(a, b) (a > b ? a : b)
+
+# define MALLOC_ERR		"malloc failed"
+# define OPEN_ERR		"open failed"
+# define READ_ERR		"read failed"
+# define OTHER_ERR		"some error hapend"
+
+# define BUFF_SIZE 80
+
+/*
+************************************ Data **************************************
+*/
 
 typedef	struct		s_gnl
 {
@@ -44,6 +62,10 @@ typedef	struct		s_list2
 	struct s_list2	*next;
 	struct s_list2	*prev;
 }					t_list2;
+
+/*
+******************************* Functions **************************************
+*/
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -147,5 +169,6 @@ char				*ft_strjoin_free(char **dst, const char *src,
 char				*ft_memjoin_free(void **dst, const void *src,
 						size_t dstsize, size_t srcsize);
 void				ft_perror_exit(const char *message);
+int					ft_base(const char c);
 
 #endif
