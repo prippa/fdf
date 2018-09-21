@@ -1,5 +1,25 @@
 #include "fdf.h"
 
+void		fdf_init_points(t_fdf *fdf)
+{
+	if (!(fdf->p = (t_point **)malloc(sizeof(t_point *) * fdf->y_size)))
+		fdf_perror_exit(MALLOC_ERR, fdf);
+	fdf->i = fdf->y_size;
+	while (fdf->i--)
+	{
+		if (!(fdf->p[fdf->i] =
+			(t_point *)malloc(sizeof(t_point) * fdf->x_size)))
+			fdf_perror_exit(MALLOC_ERR, fdf);
+		fdf->j = fdf->x_size;
+		while (fdf->j--)
+		{
+			ft_memcpy(&fdf->p[fdf->i][fdf->j], fdf->points->content,
+				sizeof(t_point));
+			ft_lstpop(&fdf->points, fdf_point_del);
+		}
+	}
+}
+
 void		fdf_init(t_fdf *fdf, const char *file_name)
 {
 	ft_bzero(fdf, sizeof(t_fdf));
@@ -7,7 +27,7 @@ void		fdf_init(t_fdf *fdf, const char *file_name)
 	fdf->i = 1;
 }
 
-void		fdf_window_init(t_fdf *fdf)
+void		fdf_init_window(t_fdf *fdf)
 {
 	if (!(fdf->mlx = mlx_init()))
 		fdf_perror_exit(MLX_INIT_ERR, fdf);

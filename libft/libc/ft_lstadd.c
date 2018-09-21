@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-void	ft_lstadd(t_list **alst, t_list *new_obj)
+void	ft_lstadd(t_list **lst, t_list *new_obj)
 {
-	new_obj->next = *alst;
-	*alst = new_obj;
+	new_obj->next = *lst;
+	*lst = new_obj;
 }
 
 void	ft_lst2_push_front(t_list2 **start, t_list2 **end, t_list2 *new_obj)

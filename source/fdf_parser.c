@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-static void	fdf_valid_color(t_fdf *fdf, const char **s, t_point *tp)
+static void	fdf_valid_color(t_fdf *fdf, char **s, t_point *tp)
 {
 	++fdf->i;
 	if (!*(++*s) || **s == ' ' || **s == '\n')
@@ -22,7 +22,7 @@ static void	fdf_valid_color(t_fdf *fdf, const char **s, t_point *tp)
 		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "syntax error");
 }
 
-static void	fdf_valid_z(t_fdf *fdf, const char **s, t_point *tp)
+static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
 {
 	fdf->c = 1;
 	if (**s == '-' || **s == '+')
@@ -43,46 +43,46 @@ static void	fdf_valid_z(t_fdf *fdf, const char **s, t_point *tp)
 	tp->z *= fdf->c;
 }
 
-static void	fdf_valid_point(t_fdf *fdf, const char **s, t_point *tp)
+static void	fdf_valid_point(t_fdf *fdf, char **s, t_point *tp)
 {
-	t_list2 *new_obj;
+	t_list		*new_obj;
 
 	fdf_valid_z(fdf, s, tp);
 	if (**s == ',')
 		fdf_valid_color(fdf, s, tp);
 	else if (**s && **s != ' ' && **s != '\n')
 		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "syntax error");
-	if (!(new_obj = ft_lst2new(tp, sizeof(t_point))))
+	if (!(new_obj = ft_lstnew(tp, sizeof(t_point))))
 		fdf_perror_exit(MALLOC_ERR, fdf);
-	ft_lst2_push_back(&fdf->p_start, &fdf->p_end, new_obj);
-	tp->z = 0;
+	ft_lstadd(&fdf->points, new_obj);
+	tp->z = 1;
 	tp->color = 0;
 	++tp->x;
 }
 
-static void	fdf_parse_file(t_fdf *fdf, const char *s)
+static void	fdf_parse_file(t_fdf *fdf, char *s)
 {
-	t_point tp;
+	t_point		tp;
 
 	ft_bzero(&tp, sizeof(t_point));
+	tp.x = 1;
+	tp.y = 1;
+	tp.z = 1;
 	while (*s)
 	{
 		if (*s == '\n')
+			fdf_parser_new_line_logic(fdf, &tp);
+		else if (*s == ' ')
+			++fdf->i;
+		else
 		{
-			++tp.y;
-			tp.x = 0;
-			fdf->i = 1;
-			++s;
+			fdf_valid_point(fdf, &s, &tp);
 			continue ;
 		}
-		if (*s == ' ')
-		{
-			++fdf->i;
-			++s;
-		}
-		else
-			fdf_valid_point(fdf, &s, &tp);
+		++s;
 	}
+	fdf->y_size = ((t_point *)fdf->points->content)->y;
+	--fdf->x_size;
 }
 
 void		fdf_parser(t_fdf *fdf)

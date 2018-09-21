@@ -1,10 +1,5 @@
 #include "fdf.h"
 
-void		fdf_free(t_fdf *fdf)
-{
-	// ft_lst2del(&fdf->p_start, &fdf->p_end, NULL);
-}
-
 void		fdf_perror_exit(const char *message, t_fdf *fdf)
 {
 	fdf_free(fdf);
@@ -22,5 +17,6 @@ void		fdf_parser_error_exit(t_fdf *fdf,
 void		fdf_exit(t_fdf *fdf)
 {
 	fdf_free(fdf);
+	// system("leaks -q fdf");
 	exit(0);
 }
