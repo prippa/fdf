@@ -21,3 +21,14 @@ void		fdf_parser_new_line_logic(t_fdf *fdf, t_point *tp)
 	tp->x = 1;
 	fdf->i = 1;
 }
+
+void		fdf_reset(t_fdf *fdf)
+{
+	fdf->gamma = 0;
+	fdf->beta = 0;
+	fdf->alpha = 0;
+	fdf->z_divisor = 1;
+	fdf->x_offset = 0;
+	fdf->y_offset = 0;
+	fdf->zoom = MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2);
+}

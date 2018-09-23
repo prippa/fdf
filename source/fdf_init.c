@@ -25,6 +25,7 @@ void		fdf_init(t_fdf *fdf, const char *file_name)
 	ft_bzero(fdf, sizeof(t_fdf));
 	fdf->file_name = file_name;
 	fdf->i = 1;
+	fdf->z_divisor = 1;
 }
 
 void		fdf_init_window(t_fdf *fdf)
@@ -33,6 +34,11 @@ void		fdf_init_window(t_fdf *fdf)
 		fdf_perror_exit(MLX_INIT_ERR, fdf);
 	if (!(fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME)))
 		fdf_perror_exit(MLX_NEW_WIN_ERR, fdf);
+	if (!(fdf->img = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT)))
+		fdf_perror_exit(MLX_NEW_IMG_ERR, fdf);
+	fdf->data_addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel),
+		&(fdf->size_line), &(fdf->endian));
+	fdf->zoom = MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2);
 	mlx_hook(fdf->win, 2, 0, fdf_button_event, fdf);
 	mlx_hook(fdf->win, 17, 0, fdf_close, fdf);
 }

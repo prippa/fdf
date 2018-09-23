@@ -21,6 +21,7 @@
 
 # define MLX_INIT_ERR		"mlx_init failed"
 # define MLX_NEW_WIN_ERR	"mlx_new_window failed"
+# define MLX_NEW_IMG_ERR	"mlx_new_image failed"
 
 /*
 ************************************ Data **************************************
@@ -33,14 +34,6 @@ typedef struct		s_point
 	int32_t			z;
 	int32_t			color;
 }					t_point;
-
-typedef struct		s_line
-{
-	int32_t			x0;
-	int32_t			y0;
-	int32_t			x1;
-	int32_t			y1;
-}					t_line;
 
 typedef struct		s_draw_line_variables
 {
@@ -56,6 +49,11 @@ typedef struct		s_fdf
 {
 	void			*mlx;
 	void			*win;
+	void			*img;
+	char			*data_addr;
+	int32_t			bits_per_pixel;
+	int32_t			size_line;
+	int32_t			endian;
 	t_list			*points;
 	uint32_t		x_size;
 	uint32_t		y_size;
@@ -64,6 +62,14 @@ typedef struct		s_fdf
 	uint32_t		i;
 	uint32_t		j;
 	char			c;
+	int32_t			zoom;
+	double			alpha;
+	double			beta;
+	double			gamma;
+	float			z_divisor;
+	int32_t			x_offset;
+	int32_t			y_offset;
+	char			projection;
 }					t_fdf;
 
 /*
@@ -90,6 +96,12 @@ void				fdf_parser_new_line_logic(t_fdf *fdf, t_point *tp);
 
 void				fdf_run(t_fdf *fdf);
 
-void				fdf_draw_line(t_fdf *fdf, t_line l);
+void				fdf_draw_line(t_fdf *fdf, t_point p0, t_point p1);
+
+t_point				fdf_get_converted_point(t_fdf *fdf, t_point p);
+
+void				fdf_reset(t_fdf *fdf);
+
+void				fdf_draw(t_fdf *fdf);
 
 #endif

@@ -1,27 +1,42 @@
 #include "fdf.h"
 
-void		fdf_draw_line(t_fdf *fdf, t_line l)
+static void	fdf_set_pixel(t_fdf *fdf, t_point *p, int32_t color)
+{
+	int32_t i;
+
+	if (!color)
+		color = 0xffffff;
+	if (p->x > 0 && p->x < WIN_WIDTH && p->y > 0 && p->y < WIN_HEIGHT)
+	{
+		i = (p->x * fdf->bits_per_pixel / 8) + (p->y * fdf->size_line);
+		fdf->data_addr[i] = color;
+		fdf->data_addr[++i] = color >> 8;
+		fdf->data_addr[++i] = color >> 16;
+	}
+}
+
+void		fdf_draw_line(t_fdf *fdf, t_point p0, t_point p1)
 {
 	t_draw_line_variables t;
 
-	t.dx = ABS(l.x1 - l.x0);
-	t.dy = ABS(l.y1 - l.y0);
-	t.sx = (l.x0 < l.x1 ? 1 : -1);
-	t.sy = (l.y0 < l.y1 ? 1 : -1);
+	t.dx = ABS(p1.x - p0.x);
+	t.dy = ABS(p1.y - p0.y);
+	t.sx = (p0.x < p1.x ? 1 : -1);
+	t.sy = (p0.y < p1.y ? 1 : -1);
 	t.err = (t.dx > t.dy ? t.dx : -t.dy) / 2;
-	while (l.x0 != l.x1 || l.y0 != l.y1)
+	while (p0.x != p1.x || p0.y != p1.y)
 	{
-		mlx_pixel_put(fdf->mlx, fdf->win, l.x0, l.y0, 0xfffff);
+		fdf_set_pixel(fdf, &p0, (p0.color ? p0.color : p1.color));
 		t.e2 = t.err;
 		if (t.e2 > -t.dx)
 		{
 			t.err -= t.dy;
-			l.x0 += t.sx;
+			p0.x += t.sx;
 		}
     	if (t.e2 < t.dy)
 		{
 			t.err += t.dx;
-			l.y0 += t.sy;
+			p0.y += t.sy;
 		}
 	}
 }

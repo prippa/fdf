@@ -55,7 +55,7 @@ static void	fdf_valid_point(t_fdf *fdf, char **s, t_point *tp)
 	if (!(new_obj = ft_lstnew(tp, sizeof(t_point))))
 		fdf_perror_exit(MALLOC_ERR, fdf);
 	ft_lstadd(&fdf->points, new_obj);
-	tp->z = 1;
+	tp->z = 0;
 	tp->color = 0;
 	++tp->x;
 }
@@ -67,7 +67,6 @@ static void	fdf_parse_file(t_fdf *fdf, char *s)
 	ft_bzero(&tp, sizeof(t_point));
 	tp.x = 1;
 	tp.y = 1;
-	tp.z = 1;
 	while (*s)
 	{
 		if (*s == '\n')
