@@ -10,6 +10,10 @@ static void	fdf_button_event_2(int key, t_fdf *fdf)
 		fdf->z_divisor += 0.5;
 	else if (key == KEY_0)
 		fdf->z_divisor -= 0.5;
+	else if (key == TAB_KEY)
+		++fdf->color_type;
+	if (fdf->color_type == COLOR_TYPES_SIZE)
+		fdf->color_type = 0;
 	if (fdf->zoom < 1)
 		fdf->zoom = 1;
 	if (fdf->z_divisor < 0.3)
@@ -20,16 +24,8 @@ static void	fdf_button_event_2(int key, t_fdf *fdf)
 
 static void	fdf_button_event_1(int key, t_fdf *fdf)
 {
-	if (key == KEY_7)
-	{
+	if (key == SPACE_KEY)
 		fdf_reset(fdf);
-		fdf->projection = 0;
-	}
-	else if (key == KEY_8)
-	{
-		fdf_reset(fdf);
-		fdf->projection = 1;
-	}
 	else if (key == RIGHT_ARROW_KEY)
 		fdf->x_offset += 10;
 	else if (key == LEFT_ARROW_KEY)

@@ -30,5 +30,7 @@ void		fdf_reset(t_fdf *fdf)
 	fdf->z_divisor = 1;
 	fdf->x_offset = 0;
 	fdf->y_offset = 0;
-	fdf->zoom = MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2);
+	if ((fdf->zoom =
+		MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2)) < 1)
+		fdf->zoom = 1;
 }

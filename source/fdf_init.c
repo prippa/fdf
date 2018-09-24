@@ -38,7 +38,9 @@ void		fdf_init_window(t_fdf *fdf)
 		fdf_perror_exit(MLX_NEW_IMG_ERR, fdf);
 	fdf->data_addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel),
 		&(fdf->size_line), &(fdf->endian));
-	fdf->zoom = MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2);
+	if ((fdf->zoom =
+		MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2)) < 1)
+		fdf->zoom = 1;
 	mlx_hook(fdf->win, 2, 0, fdf_button_event, fdf);
 	mlx_hook(fdf->win, 17, 0, fdf_close, fdf);
 }

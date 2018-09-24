@@ -19,7 +19,10 @@
 # define KEY_9	25
 # define KEY_0	29
 
-# define PLUS_KEY 27
-# define MINUS_KEY 24
+# define PLUS_KEY	27
+# define MINUS_KEY	24
+
+# define TAB_KEY	48
+# define SPACE_KEY	49
 
 #endif

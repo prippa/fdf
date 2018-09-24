@@ -26,6 +26,7 @@ void		fdf_draw(t_fdf *fdf)
 
 void		fdf_run(t_fdf *fdf)
 {
+	srand(time(0));
 	fdf_draw(fdf);
 	mlx_loop(fdf->mlx);
 }

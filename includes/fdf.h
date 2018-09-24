@@ -10,6 +10,7 @@
 # include <mlx.h>
 # include <sys/stat.h>
 # include <math.h>
+# include <time.h>
 
 /*
 ************************************ Defines ***********************************
@@ -26,6 +27,16 @@
 /*
 ************************************ Data **************************************
 */
+
+typedef enum		e_color_types
+{
+	DEFAULT,
+	RED_COLOR,
+	GREEN_COLOR,
+	BLUE_COLOR,
+	RANDOM_COLOR,
+	COLOR_TYPES_SIZE
+}					t_color_types;
 
 typedef struct		s_point
 {
@@ -69,7 +80,7 @@ typedef struct		s_fdf
 	float			z_divisor;
 	int32_t			x_offset;
 	int32_t			y_offset;
-	char			projection;
+	uint8_t			color_type;
 }					t_fdf;
 
 /*
@@ -103,5 +114,9 @@ t_point				fdf_get_converted_point(t_fdf *fdf, t_point p);
 void				fdf_reset(t_fdf *fdf);
 
 void				fdf_draw(t_fdf *fdf);
+
+void				fdf_rotate_x(t_fdf *fdf, t_point *p);
+void				fdf_rotate_y(t_fdf *fdf, t_point *p);
+void				fdf_rotate_z(t_fdf *fdf, t_point *p);
 
 #endif
