@@ -4,22 +4,19 @@ static void		fdf_draw_usage(t_fdf *fdf)
 {
 	if (!fdf->draw_usage)
 	{
-		mlx_string_put(fdf->mlx, fdf->win, 25, 25, UC,
-			"Press 'Enter' to see Usage");
+		mlx_string_put(fdf->mlx, fdf->win, 25, 25, UC, INFO_SHOW);
 		return ;
 	}
-	mlx_string_put(fdf->mlx, fdf->win, 25, 25, UC,
-		"Press 'Enter' to hide Usage");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 50, UC, "[ESC] - close");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 75, UC, "[Arrows] - move figure");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 100, UC, "Rotate by X - [3] [4]");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 125, UC, "Rotate by Y - [5] [6]");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 150, UC, "Rotate by Z - [1] [2]");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 175, UC, "Zoom - [-] [+]");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 200, UC,
-		"Decrease/Increase Z - [9] [0]");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 225, UC, "[TAB] - change color");
-	mlx_string_put(fdf->mlx, fdf->win, 35, 250, UC, "[SPACE] - reset map");
+	mlx_string_put(fdf->mlx, fdf->win, 25, 25, UC, INFO_HIDE);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 50, UC, INFO_CLOSE);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 75, UC, INFO_MOVE);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 100, UC, INFO_ROT_X);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 125, UC, INFO_ROT_Y);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 150, UC, INFO_ROT_Z);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 175, UC, INFO_ZOOM);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 200, UC, INFO_DI_Z);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 225, UC, INFO_COLOR);
+	mlx_string_put(fdf->mlx, fdf->win, 35, 250, UC, INFO_RESET);
 }
 
 static void		fdf_transform_to_iso_projection(t_point *p)

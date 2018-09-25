@@ -11,15 +11,14 @@ void		fdf_parser_error_exit(t_fdf *fdf,
 {
 	fdf_free(fdf);
 	if (!y && !x)
-		ft_dprintf(2, "ERROR: fdf: %s\n", message);
+		ft_dprintf(2, PARS_ERR, message);
 	else
-		ft_dprintf(2, "ERROR: fdf: Line %u, Column %u : %s\n", y, x, message);
+		ft_dprintf(2, PARS_ERR_YX, y, x, message);
 	exit(-1);
 }
 
 void		fdf_exit(t_fdf *fdf)
 {
 	fdf_free(fdf);
-	// system("leaks -q fdf");
 	exit(0);
 }

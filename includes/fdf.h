@@ -7,6 +7,7 @@
 
 # include "libft.h"
 # include "fdf_keys.h"
+# include "fdf_messages.h"
 # include <mlx.h>
 # include <sys/stat.h>
 # include <math.h>
@@ -23,10 +24,6 @@
 # define WIN_WIDTH		1280
 # define WIN_HEIGHT		720
 # define WIN_NAME		"fdf"
-
-# define MLX_INIT_ERR		"mlx_init failed"
-# define MLX_NEW_WIN_ERR	"mlx_new_window failed"
-# define MLX_NEW_IMG_ERR	"mlx_new_image failed"
 
 # define UC						0xd3d3d3
 # define FDF_DEFAULT_COLOR		0xfffff

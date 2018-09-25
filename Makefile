@@ -23,7 +23,7 @@ DIR_LIB_INC	=	$(DIR_LIB)includes/
 LIBFT		=	$(DIR_LIB)libft.a
 
 #-------------------------- Header files ---------------------------------------
-HEAD_FDF	=	fdf.h fdf_keys.h
+HEAD_FDF	=	fdf.h fdf_keys.h fdf_messages.h
 
 #-------------------------- Source files ---------------------------------------
 C_FDF		= 	main.c fdf_parser.c fdf_init.c fdf_exit.c fdf_rotates.c\
