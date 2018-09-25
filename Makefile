@@ -27,7 +27,7 @@ HEAD_FDF	=	fdf.h fdf_keys.h fdf_messages.h
 
 #-------------------------- Source files ---------------------------------------
 C_FDF		= 	main.c fdf_parser.c fdf_init.c fdf_exit.c fdf_rotates.c\
-				fdf_events_control.c fdf_run.c fdf_draw_line.c fdf_free.c\
+				fdf_events_control.c fdf_draw.c fdf_draw_line.c fdf_free.c\
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_FDF:.c=.o))
