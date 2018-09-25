@@ -2,24 +2,24 @@
 
 static void	fdf_valid_color(t_fdf *fdf, char **s, t_point *tp)
 {
-	++fdf->i;
+	++fdf->j;
 	if (!*(++*s) || **s == ' ' || **s == '\n')
 		return ;
 	if (*((*s)++) == '0' && (**s == 'x' || **s == 'X'))
 		++*s;
 	else
-		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "hex '0x' is missing");
-	fdf->i += 2;
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "hex '0x' is missing");
+	fdf->j += 2;
 	if (ft_base(**s) == -1)
-		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "no value after '0x'");
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "no value after '0x'");
 	while ((fdf->c = ft_base(**s)) > -1)
 	{
 		tp->color = (tp->color * 16) + fdf->c;
-		++fdf->i;
+		++fdf->j;
 		++*s;
 	}
 	if (**s && **s != ' ' && **s != '\n')
-		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "syntax error");
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "syntax error");
 }
 
 static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
@@ -30,16 +30,18 @@ static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
 		if (**s == '-')
 			fdf->c = -1;
 		++*s;
-		++fdf->i;
+		++fdf->j;
 	}
 	if (!ft_isdigit(**s))
-		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "syntax error");
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "syntax error");
 	while (ft_isdigit(**s))
 	{
 		tp->z = (tp->z * 10) + (**s - '0');
-		++fdf->i;
+		++fdf->j;
 		++*s;
 	}
+	if (tp->z > FDF_Z_MAX)
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "z is to big");
 	tp->z *= fdf->c;
 }
 
@@ -51,7 +53,7 @@ static void	fdf_valid_point(t_fdf *fdf, char **s, t_point *tp)
 	if (**s == ',')
 		fdf_valid_color(fdf, s, tp);
 	else if (**s && **s != ' ' && **s != '\n')
-		fdf_parser_error_exit(fdf, tp->y + 1, fdf->i, "syntax error");
+		fdf_parser_error_exit(fdf, fdf->i, fdf->j, "syntax error");
 	if (!(new_obj = ft_lstnew(tp, sizeof(t_point))))
 		fdf_perror_exit(MALLOC_ERR, fdf);
 	ft_lstadd(&fdf->points, new_obj);
@@ -60,7 +62,28 @@ static void	fdf_valid_point(t_fdf *fdf, char **s, t_point *tp)
 	++tp->x;
 }
 
-static void	fdf_parse_file(t_fdf *fdf, char *s)
+static void	fdf_parser_new_line_logic(t_fdf *fdf, t_point *tp)
+{
+	static char	flag;
+
+	if (tp->x > 1)
+	{
+		if (!flag)
+		{
+			fdf->x_size = tp->x;
+			flag = 1;
+		}
+		else if (tp->x != fdf->x_size)
+			fdf_parser_error_exit(fdf, fdf->i, fdf->j,
+				"invalid point(s) count in line");
+		++tp->y;
+		tp->x = 1;
+	}
+	++fdf->i;
+	fdf->j = 1;
+}
+
+void		fdf_parse_file(t_fdf *fdf, char *s)
 {
 	t_point		tp;
 
@@ -72,7 +95,7 @@ static void	fdf_parse_file(t_fdf *fdf, char *s)
 		if (*s == '\n')
 			fdf_parser_new_line_logic(fdf, &tp);
 		else if (*s == ' ')
-			++fdf->i;
+			++fdf->j;
 		else
 		{
 			fdf_valid_point(fdf, &s, &tp);
@@ -80,26 +103,7 @@ static void	fdf_parse_file(t_fdf *fdf, char *s)
 		}
 		++s;
 	}
-	fdf->y_size = ((t_point *)fdf->points->content)->y;
-	--fdf->x_size;
-}
-
-void		fdf_parser(t_fdf *fdf)
-{
-	struct stat	stat_buff;
-	char		*file;
-	int			fd;
-
-	if ((stat(fdf->file_name, &stat_buff)) == -1)
-		fdf_perror_exit(fdf->file_name, fdf);
-	if (!(file = (char *)malloc(sizeof(char) * (stat_buff.st_size + 1))))
-		fdf_perror_exit(MALLOC_ERR, fdf);
-	if ((fd = open(fdf->file_name, O_RDONLY)) == -1)
-		fdf_perror_exit(fdf->file_name, fdf);
-	if ((read(fd, file, stat_buff.st_size)) == -1)
-		fdf_perror_exit(fdf->file_name, fdf);
-	file[stat_buff.st_size] = 0;
-	fdf_parse_file(fdf, file);
-	free(file);
-	close(fd);
+	if (!fdf->points)
+		fdf_parser_error_exit(fdf, 0, 0, "map is empty");
+	fdf_parser_new_line_logic(fdf, &tp);
 }

@@ -16,6 +16,10 @@
 ************************************ Defines ***********************************
 */
 
+# define FDF_TEXT_USAGE	"Usage: ./fdf [map]\n"
+
+# define FDF_Z_MAX		10000
+
 # define WIN_WIDTH		1280
 # define WIN_HEIGHT		720
 # define WIN_NAME		"fdf"
@@ -23,6 +27,12 @@
 # define MLX_INIT_ERR		"mlx_init failed"
 # define MLX_NEW_WIN_ERR	"mlx_new_window failed"
 # define MLX_NEW_IMG_ERR	"mlx_new_image failed"
+
+# define UC						0xd3d3d3
+# define FDF_DEFAULT_COLOR		0xfffff
+# define FDF_RED_COLOR			0xff0000
+# define FDF_GREEN_COLOR		0x00ff00
+# define FDF_BLUE_COLOR			0x0000ff
 
 /*
 ************************************ Data **************************************
@@ -66,12 +76,12 @@ typedef struct		s_fdf
 	int32_t			size_line;
 	int32_t			endian;
 	t_list			*points;
-	uint32_t		x_size;
-	uint32_t		y_size;
+	int32_t			x_size;
+	int32_t			y_size;
 	t_point			**p;
 	const char		*file_name;
-	uint32_t		i;
-	uint32_t		j;
+	int32_t			i;
+	int32_t			j;
 	char			c;
 	int32_t			zoom;
 	double			alpha;
@@ -81,6 +91,7 @@ typedef struct		s_fdf
 	int32_t			x_offset;
 	int32_t			y_offset;
 	uint8_t			color_type;
+	char			draw_usage;
 }					t_fdf;
 
 /*
@@ -96,25 +107,12 @@ void				fdf_exit(t_fdf *fdf);
 void				fdf_perror_exit(const char *message, t_fdf *fdf);
 void				fdf_parser_error_exit(t_fdf *fdf,
 						uint32_t y, uint32_t x, const char *message);
-
-void				fdf_print_usage(void);
-
 int					fdf_button_event(int key, t_fdf *fdf);
 int					fdf_close(t_fdf *fdf);
-
-void				fdf_parser(t_fdf *fdf);
-void				fdf_parser_new_line_logic(t_fdf *fdf, t_point *tp);
-
-void				fdf_run(t_fdf *fdf);
-
+void				fdf_parse_file(t_fdf *fdf, char *s);
 void				fdf_draw_line(t_fdf *fdf, t_point p0, t_point p1);
-
-t_point				fdf_get_converted_point(t_fdf *fdf, t_point p);
-
 void				fdf_reset(t_fdf *fdf);
-
 void				fdf_draw(t_fdf *fdf);
-
 void				fdf_rotate_x(t_fdf *fdf, t_point *p);
 void				fdf_rotate_y(t_fdf *fdf, t_point *p);
 void				fdf_rotate_z(t_fdf *fdf, t_point *p);

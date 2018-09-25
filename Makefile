@@ -11,9 +11,9 @@
 # **************************************************************************** #
 
 NAME		=	fdf
-# FLAGS		= 	-Wall -Werror -Wextra
+FLAGS		= 	-Wall -Werror -Wextra
 MLXFLAGS 	=	-lmlx -framework OpenGL -framework AppKit
-CC			=	gcc -g
+CC			=	gcc
 
 DIR_INC		=	./includes/
 DIR_SRC		=	./source/
@@ -26,9 +26,8 @@ LIBFT		=	$(DIR_LIB)libft.a
 HEAD_FDF	=	fdf.h fdf_keys.h
 
 #-------------------------- Source files ---------------------------------------
-C_FDF		= 	main.c fdf_parser.c fdf_init.c fdf_exit.c fdf_utils.c\
+C_FDF		= 	main.c fdf_parser.c fdf_init.c fdf_exit.c fdf_rotates.c\
 				fdf_events_control.c fdf_run.c fdf_draw_line.c fdf_free.c\
-				fdf_get_converted_point.c fdf_rotates.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_FDF:.c=.o))

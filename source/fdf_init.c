@@ -2,6 +2,8 @@
 
 void		fdf_init_points(t_fdf *fdf)
 {
+	fdf->y_size = ((t_point *)fdf->points->content)->y;
+	--fdf->x_size;
 	if (!(fdf->p = (t_point **)malloc(sizeof(t_point *) * fdf->y_size)))
 		fdf_perror_exit(MALLOC_ERR, fdf);
 	fdf->i = fdf->y_size;
@@ -25,6 +27,7 @@ void		fdf_init(t_fdf *fdf, const char *file_name)
 	ft_bzero(fdf, sizeof(t_fdf));
 	fdf->file_name = file_name;
 	fdf->i = 1;
+	fdf->j = 1;
 	fdf->z_divisor = 1;
 }
 
@@ -43,4 +46,18 @@ void		fdf_init_window(t_fdf *fdf)
 		fdf->zoom = 1;
 	mlx_hook(fdf->win, 2, 0, fdf_button_event, fdf);
 	mlx_hook(fdf->win, 17, 0, fdf_close, fdf);
+}
+
+void		fdf_reset(t_fdf *fdf)
+{
+	fdf->gamma = 0;
+	fdf->beta = 0;
+	fdf->alpha = 0;
+	fdf->z_divisor = 1;
+	fdf->x_offset = 0;
+	fdf->y_offset = 0;
+	fdf->color_type = 0;
+	if ((fdf->zoom =
+		MIN(WIN_WIDTH / fdf->x_size / 2, WIN_HEIGHT / fdf->y_size / 2)) < 1)
+		fdf->zoom = 1;
 }

@@ -24,5 +24,6 @@
 
 # define TAB_KEY	48
 # define SPACE_KEY	49
+# define ENTER_KEY	36
 
 #endif

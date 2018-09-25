@@ -14,7 +14,7 @@ NAME		=	libft.a
 
 FLAGS		= 	-Wall -Werror -Wextra
 
-CC			=	gcc -g
+CC			=	gcc
 
 DIR_INC		=	./includes/
 DIR_LIBC	=	./libc/

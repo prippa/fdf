@@ -10,7 +10,10 @@ void		fdf_parser_error_exit(t_fdf *fdf,
 			uint32_t y, uint32_t x, const char *message)
 {
 	fdf_free(fdf);
-	ft_dprintf(2, "Line %u, Column %u : %s\n", y, x, message);
+	if (!y && !x)
+		ft_dprintf(2, "ERROR: fdf: %s\n", message);
+	else
+		ft_dprintf(2, "ERROR: fdf: Line %u, Column %u : %s\n", y, x, message);
 	exit(-1);
 }
 

@@ -12,6 +12,10 @@ static void	fdf_button_event_2(int key, t_fdf *fdf)
 		fdf->z_divisor -= 0.5;
 	else if (key == TAB_KEY)
 		++fdf->color_type;
+	else if (key == ENTER_KEY)
+		++fdf->draw_usage;
+	if (fdf->draw_usage > 1)
+		fdf->draw_usage = 0;
 	if (fdf->color_type == COLOR_TYPES_SIZE)
 		fdf->color_type = 0;
 	if (fdf->zoom < 1)
