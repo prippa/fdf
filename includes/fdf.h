@@ -33,8 +33,8 @@
 
 # define FDF_Z_MAX		10000
 
-# define WIN_WIDTH		1280
-# define WIN_HEIGHT		720
+# define WIN_WIDTH		1920
+# define WIN_HEIGHT		1080
 # define WIN_NAME		"fdf"
 
 # define UC						0xd3d3d3

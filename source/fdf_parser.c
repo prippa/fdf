@@ -36,6 +36,8 @@ static void	fdf_valid_color(t_fdf *fdf, char **s, t_point *tp)
 
 static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
 {
+	int64_t num;
+
 	fdf->c = 1;
 	if (**s == '-' || **s == '+')
 	{
@@ -46,14 +48,17 @@ static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
 	}
 	if (!ft_isdigit(**s))
 		fdf_parser_error_exit(fdf, fdf->i, fdf->j, PARS_SUNTAX_ERR);
+	num = 0;
 	while (ft_isdigit(**s))
 	{
-		tp->z = (tp->z * 10) + (**s - '0');
+		if ((num = (num * 10) + (**s - '0')) > INT32_MAX)
+			fdf_parser_error_exit(fdf, fdf->i, fdf->j, PARS_Z_ERR);
 		++fdf->j;
 		++*s;
 	}
-	if (tp->z > FDF_Z_MAX)
+	if (num > FDF_Z_MAX)
 		fdf_parser_error_exit(fdf, fdf->i, fdf->j, PARS_Z_ERR);
+	tp->z = (int32_t)num;
 	tp->z *= fdf->c;
 }
 
