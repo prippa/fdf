@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_draw_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:29:24 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:29:31 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static void	fdf_set_pixel(t_fdf *fdf, t_point *p0)
@@ -31,7 +43,7 @@ void		fdf_draw_line(t_fdf *fdf, t_point p0, t_point p1)
 			t.err -= t.dy;
 			p0.x += t.sx;
 		}
-    	if (t.e2 < t.dy)
+		if (t.e2 < t.dy)
 		{
 			t.err += t.dx;
 			p0.y += t.sy;

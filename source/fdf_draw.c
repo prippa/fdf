@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_draw.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:29:37 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:29:38 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static void		fdf_draw_usage(t_fdf *fdf)
@@ -21,13 +33,13 @@ static void		fdf_draw_usage(t_fdf *fdf)
 
 static void		fdf_transform_to_iso_projection(t_point *p)
 {
-    int32_t previous_x;
-    int32_t previous_y;
+	int32_t previous_x;
+	int32_t previous_y;
 
-    previous_x = p->x;
-    previous_y = p->y;
-    p->x = (previous_x - previous_y) * cos(0.523599);
-    p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
+	previous_x = p->x;
+	previous_y = p->y;
+	p->x = (previous_x - previous_y) * cos(0.523599);
+	p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
 }
 
 static void		fdf_set_color(t_fdf *fdf, t_point *p)

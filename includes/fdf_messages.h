@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_messages.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:28:16 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:28:17 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_MESSAGES_H
 # define FDF_MESSAGES_H
 
@@ -26,4 +38,4 @@
 # define INFO_COLOR			"[TAB] - change color"
 # define INFO_RESET			"[SPACE] - reset map"
 
-# endif
+#endif
