@@ -58,8 +58,7 @@ static void	fdf_valid_z(t_fdf *fdf, char **s, t_point *tp)
 	}
 	if (num > FDF_Z_MAX)
 		fdf_parser_error_exit(fdf, fdf->i, fdf->j, PARS_Z_ERR);
-	tp->z = (int32_t)num;
-	tp->z *= fdf->c;
+	tp->z = (int32_t)num * fdf->c;
 }
 
 static void	fdf_valid_point(t_fdf *fdf, char **s, t_point *tp)
